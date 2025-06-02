@@ -1,24 +1,48 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Tachyon, a rails app to help with medical records for non-profit orgs
 
-Things you may want to cover:
+The name is from the same anime waifu from [uma musume](https://umamusu.wiki/Agnes_Tachyon/Gallery#/media/File:Img_main02.png)
 
-* Ruby version
+## Ruby version
 
-* System dependencies
+3.3.0
 
-* Configuration
+## System dependencies
 
-* Database creation
+### System
 
-* Database initialization
+- Redis
+- Elasticsearch
+- PostgreSQL
+- Vite
 
-* How to run the test suite
+### Gems
 
-* Services (job queues, cache servers, search engines, etc.)
+- [bullet](https://github.com/flyerhzm/bullet)
+- [vite_rails](https://github.com/ElMassimo/vite_ruby)
+- [sidekiq](https://github.com/sidekiq/sidekiq)
+- [devise](https://github.com/heartcombo/devise)
+- [searchkick](https://github.com/ankane/searchkick)
+- [rspec](https://rspec.info/)
+- [pundit](https://github.com/varvet/pundit)
 
-* Deployment instructions
+## Configuration
 
-* ...
+## Database creation
+
+`bundle exec rails db:create`
+
+## Database initialization
+
+`bundle exec rails db:setup`
+
+## How to run the test suite
+
+## Services (job queues, cache servers, search engines, etc.)
+
+- Sidekiq, more T.B.D.
+
+## Deployment instructions
+
+T.B.D.
