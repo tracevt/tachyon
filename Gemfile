@@ -3,7 +3,7 @@ source "https://rubygems.org"
 ruby "3.3.0"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.1.3", ">= 7.1.3.4"
+gem "rails", "~> 8.0", ">= 8.0.2"
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
@@ -47,6 +47,28 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri windows ]
+
+  # RSpec for testing
+  gem 'rspec-rails', '~> 8.0'
+
+  # Factory Bot for creating test data (a common companion to RSpec)
+  gem 'factory_bot_rails', '~> 6.0'
+
+  # Faker for generating fake data for tests (often used with Factory Bot)
+  gem 'faker', '~> 3.0'
+
+  # Shoulda Matchers for RSpec (provides common matchers for Rails models)
+  gem 'shoulda-matchers', '~> 6.5'
+
+  # SimpleCov for code coverage reporting (optional, but highly recommended)
+  gem 'simplecov', require: false, group: :test
+
+  # Database Cleaner for cleaning your test database between runs (optional, but very useful)
+  gem 'database_cleaner-active_record', '~> 2.0'
+
+  # For integration testing with Capybara and headless chrome
+  gem 'capybara', '~> 3.0'
+  gem 'selenium-webdriver', '~> 4.33'
 end
 
 group :development do
@@ -58,10 +80,4 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
-end
-
-group :test do
-  # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem "capybara"
-  gem "selenium-webdriver"
 end
