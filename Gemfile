@@ -51,19 +51,19 @@ group :development, :test do
   # RSpec for testing
   gem 'rspec-rails', '~> 8.0'
 
-  # Factory Bot for creating test data (a common companion to RSpec)
+  # Factory Bot for creating test data
   gem 'factory_bot_rails', '~> 6.0'
 
-  # Faker for generating fake data for tests (often used with Factory Bot)
+  # Faker for generating fake data for tests
   gem 'faker', '~> 3.0'
 
-  # Shoulda Matchers for RSpec (provides common matchers for Rails models)
+  # Shoulda Matchers for RSpec
   gem 'shoulda-matchers', '~> 6.5'
 
-  # SimpleCov for code coverage reporting (optional, but highly recommended)
+  # SimpleCov for code coverage reporting
   gem 'simplecov', require: false, group: :test
 
-  # Database Cleaner for cleaning your test database between runs (optional, but very useful)
+  # Database Cleaner for cleaning your test database between runs
   gem 'database_cleaner-active_record', '~> 2.0'
 
   # For integration testing with Capybara and headless chrome
