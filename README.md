@@ -39,6 +39,17 @@ The name is from the same anime waifu from [uma musume](https://umamusu.wiki/Agn
 
 ## How to run the test suite
 
+RSpec is used to do tests across the app, the other gems of choice to further
+improve the testing experience are:
+
+- factory_bot_rails
+- faker
+- shoulda-matchers
+- simplecov
+- database_cleaner-active_record
+- capybara
+- selenium_webdriver
+
 ## Services (job queues, cache servers, search engines, etc.)
 
 - Sidekiq, more T.B.D.

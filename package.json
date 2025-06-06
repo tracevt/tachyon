@@ -1,0 +1,27 @@
+{
+  "name": "tachyon",
+  "version": "0.0.1",
+  "description": "A rails app that helps with medical records",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tracevt/tachyon.git"
+  },
+  "keywords": [
+    "rails",
+    "vite"
+  ],
+  "author": "trace@devcafe.mx",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tracevt/tachyon/issues"
+  },
+  "homepage": "https://github.com/tracevt/tachyon#readme"
+}
