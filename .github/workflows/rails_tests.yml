@@ -1,4 +1,4 @@
-name: Rails Tests
+name: Run Tests
 
 on:
   push:
@@ -10,17 +10,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    # Set up a PostgreSQL service for the test environment
     services:
       postgres:
         image: postgres:15-alpine
         ports:
           - "5432:5432"
         env:
-          POSTGRES_DB: tachyon_test # Matches your config/database.yml test database name
-          POSTGRES_USER: runner # A user for the CI environment
-          POSTGRES_PASSWORD: '' # No password needed for local CI test DB
-        options: >- # Health check to ensure PostgreSQL is ready
+          POSTGRES_DB: tachyon_test
+          POSTGRES_USER: runner
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_TEST_PASSWORD }}
+        options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
@@ -29,6 +28,7 @@ jobs:
     env:
       RAILS_ENV: test
       CI: true
+      PG_PASSWORD: ${{ secrets.POSTGRES_TEST_PASSWORD }}
 
     steps:
     - name: Checkout code
@@ -40,26 +40,22 @@ jobs:
         ruby-version: 3.3.0
         bundler-cache: true
 
-    - name: Set up Node.js
+    - name: Set up Node.js (for asset compilation, even with importmap)
       uses: actions/setup-node@v4
       with:
         node-version: 20
         cache: 'npm'
 
     - name: Configure PostgreSQL client libraries
-      # Required to build the `pg` gem
       run: |
         sudo apt-get update
         sudo apt-get install -y libpq-dev
 
     - name: Wait for PostgreSQL service
-      # This step ensures the database is fully ready before Rails tries to connect.
-      # The `services` health check typically handles this, but an explicit wait
-      # can prevent race conditions on some runners.
       run: |
         echo "Waiting for PostgreSQL..."
         for i in $(seq 1 10); do
-          if PGPASSWORD='' psql -h localhost -U runner -d tachyon_test -c "select 1" > /dev/null 2>&1; then
+          if PGPASSWORD="${{ env.PG_PASSWORD }}" psql -h localhost -U runner -d tachyon_test -c "select 1" > /dev/null 2>&1; then
             echo "PostgreSQL is ready!"
             exit 0
           fi
@@ -69,14 +65,19 @@ jobs:
         echo "PostgreSQL did not become ready within the timeout."
         exit 1
 
-    - name: Modify database.yml for CI (Optional, but ensures correct connection)
-      # This step modifies the database.yml to explicitly connect to the service
-      # PostgreSQL instance.
+    - name: Modify database.yml for CI
       run: |
-        sed -i 's/database: tachyon_development/database: tachyon_test/' config/database.yml
-        sed -i 's/#username: tachyon/username: runner/' config/database.yml
-        sed -i 's/#password:/password: /' config/database.yml
-        cat config/database.yml
+        echo "test:" > config/database.yml
+        echo "  adapter: postgresql" >> config/database.yml
+        echo "  encoding: unicode" >> config/database.yml
+        echo "  pool: 5" >> config/database.yml
+        echo "  database: tachyon_test" >> config/database.yml
+        echo "  username: runner" >> config/database.yml
+        echo "  password: ${{ env.PG_PASSWORD }}" >> config/database.yml
+        echo "  host: localhost" >> config/database.yml
+        echo "  port: 5432" >> config/database.yml
+
+        cat config/database.yml # Print for debugging purposes
 
     - name: Database setup
       run: |
