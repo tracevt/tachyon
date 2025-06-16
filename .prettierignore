@@ -1,0 +1,16 @@
+# Ignore artifacts:
+build
+coverage
+
+# Ignore all ERB and HTML files:
+**/*.html
+**/*.html.erb
+
+# Ignore YML files
+**/*.yml
+
+# Ignore markdown files
+**/*.md
+
+# Ignore JSON files
+**/*.json
