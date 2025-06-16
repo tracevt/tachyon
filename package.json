@@ -8,7 +8,9 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "bun bun.config.js",
+    "build:css": "bunx @tailwindcss/cli -i ./app/assets/stylesheets/application.tailwind.css -o ./app/assets/builds/application.css --minify"
   },
   "repository": {
     "type": "git",
@@ -16,12 +18,16 @@
   },
   "keywords": [
     "rails",
-    "vite"
+    "bun"
   ],
   "author": "trace@devcafe.mx",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/tracevt/tachyon/issues"
   },
-  "homepage": "https://github.com/tracevt/tachyon#readme"
+  "homepage": "https://github.com/tracevt/tachyon#readme",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.10",
+    "tailwindcss": "^4.1.10"
+  }
 }
