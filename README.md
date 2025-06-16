@@ -15,7 +15,7 @@ The name is from the same anime waifu from [uma musume](https://umamusu.wiki/Agn
 - Redis
 - Elasticsearch
 - PostgreSQL
-- Vite
+- Bun
 
 ### Gems
 
@@ -26,6 +26,12 @@ The name is from the same anime waifu from [uma musume](https://umamusu.wiki/Agn
 - [searchkick](https://github.com/ankane/searchkick)
 - [rspec](https://rspec.info/)
 - [pundit](https://github.com/varvet/pundit)
+
+### Frontend
+
+Note: All of the dependencies run under bun and bunx instead of node
+
+- [TailwindCSS](https://tailwindcss.com/)
 
 ## Configuration
 

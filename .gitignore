@@ -36,3 +36,8 @@
 
 # No node_modules
 /node_modules/*
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
+
+/node_modules
