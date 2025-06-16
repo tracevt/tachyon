@@ -1,0 +1,13 @@
+plugins:
+  - rubocop-capybara
+  - rubocop-factory_bot
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rspec_rails
+Style/Documentation:
+  Enabled: false
+Rails/SkipsModelValidations:
+  Exclude:
+    - db/migrate/20250602052727_add_service_name_to_active_storage_blobs.active_storage.rb
+AllCops:
+    NewCops: enable

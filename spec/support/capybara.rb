@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'selenium/webdriver' # Ensure this is loaded if you're using it
@@ -34,7 +36,7 @@ RSpec.configure do |config|
   config.before(:each, type: :feature) do
     if ENV['CI']
       Capybara.default_max_wait_time = 30
-      puts "Capybara timeout set to 10 seconds for CI environment." # Optional: for debugging CI runs
+      puts 'Capybara timeout set to 10 seconds for CI environment.' # Optional: for debugging CI runs
     else
       Capybara.default_max_wait_time = 10
     end
