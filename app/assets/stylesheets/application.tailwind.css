@@ -1,1 +1,19 @@
 @import 'tailwindcss';
+@plugin 'daisyui';
+
+
+@font-face {
+  font-display: swap;
+  font-family: 'Roboto Flex';
+  font-style: normal;
+  font-weight: 400;
+  src: url('roboto-flex.woff2') format('woff2');
+}
+
+body {
+  font-family: 'Roboto Flex', sans-serif;
+}
+
+.main {
+  margin: 8px;
+}
