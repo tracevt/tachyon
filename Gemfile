@@ -55,6 +55,10 @@ gem 'rubocop-rails', '~> 2.32.0', require: false
 gem 'rubocop-rspec', '~> 3.6', require: false
 gem 'rubocop-rspec_rails', '~> 2.31', require: false
 
+# Brakeman for security scanning
+
+gem 'brakeman'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem 'debug', platforms: %i[mri windows]
