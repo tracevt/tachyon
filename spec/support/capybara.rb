@@ -12,7 +12,9 @@ RSpec.configure do |config|
     Capybara.register_driver :headless_chrome do |app|
       options = Selenium::WebDriver::Chrome::Options.new.tap do |opts|
         # These are common arguments for running headless Chrome
-        opts.add_argument('--headless') # Run Chrome in headless mode
+        unless ENV['HEADLESS']
+          opts.add_argument('--headless') # Run Chrome in headless mode
+        end
         opts.add_argument('--disable-gpu') # Applicable for older Chrome versions
         opts.add_argument('--no-sandbox') # Bypass OS security model (needed for some CI environments)
         opts.add_argument('--disable-dev-shm-usage') # Overcome limited resource problems

@@ -8,4 +8,17 @@ RSpec.feature 'Welcome page' do
 
     expect(page).to have_text('Welcome to Tachyon')
   end
+
+  context 'with a logged in user' do
+    let_it_be(:user) { create(:user) }
+
+    before do
+      sign_in(user)
+      visit '/'
+    end
+
+    it 'displays a greeting message with the user name' do
+      expect(page).to have_text("Hola #{user.name}")
+    end
+  end
 end
