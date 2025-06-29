@@ -1,7 +1,6 @@
 @import 'tailwindcss';
 @plugin 'daisyui';
 
-
 @font-face {
   font-display: swap;
   font-family: 'Roboto Flex';

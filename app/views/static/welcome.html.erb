@@ -1,1 +1,4 @@
 <h1>Welcome to Tachyon</h1>
+<% if user_signed_in? %>
+  <h2>Hola <%= current_user.name %> </h2>
+<% end %>

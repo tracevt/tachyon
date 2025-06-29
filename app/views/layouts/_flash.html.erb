@@ -1,0 +1,16 @@
+<% flash.each do |type, message| %>
+  <% css_class = case type.to_sym
+                 when :notice  then "alert-info"
+                 when :success then "alert-success"
+                 when :alert   then "alert-warning"
+                 when :error   then "alert-error"
+                 else "alert-warning"
+                 end
+  %>
+  <div role="alert" class="alert alert-horizontal col-span-5 <%= css_class %> js-alert">
+    <span><%= message %></span>
+    <div class="justify-self-end">
+      <button type="button" class="btn btn-sm js-close-alert" aria-label="Close">Cerrar</button>
+    </div>
+  </div>
+<% end %>

@@ -9,5 +9,11 @@ Style/Documentation:
 Rails/SkipsModelValidations:
   Exclude:
     - db/migrate/20250602052727_add_service_name_to_active_storage_blobs.active_storage.rb
+Metrics/AbcSize:
+  Max: 22
+Metrics/MethodLength:
+  Max: 40
+Layout/LineLength:
+  Max: 160
 AllCops:
-    NewCops: enable
+  NewCops: enable
