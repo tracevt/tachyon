@@ -6,11 +6,17 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+    <%= stylesheet_link_tag "application" %>
+    <%= javascript_include_tag "application", type: "module" %>
   </head>
 
   <body>
-    <%= yield %>
+    <%= render "layouts/navbar" %>
+    <main class="main grid grid-cols-5 grid-rows-5 gap-2 <%= yield(:main_classes)%>">
+      <%= render "layouts/flash" %>
+      <div class="col-span-5 row-span-4 row-start-2">
+        <%= yield %>
+      </div>
+    </main>
   </body>
 </html>
