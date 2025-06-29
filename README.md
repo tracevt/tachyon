@@ -20,7 +20,8 @@ The name is from the same anime waifu from [uma musume](https://umamusu.wiki/Agn
 ### Gems
 
 - [bullet](https://github.com/flyerhzm/bullet)
-- [vite_rails](https://github.com/ElMassimo/vite_ruby)
+- [cssbundling-rails](https://github.com/rails/cssbundling-rails)
+- [jsbundling-rails](https://github.com/rails/jsbundling-rails)
 - [sidekiq](https://github.com/sidekiq/sidekiq)
 - [devise](https://github.com/heartcombo/devise)
 - [searchkick](https://github.com/ankane/searchkick)
@@ -32,6 +33,11 @@ The name is from the same anime waifu from [uma musume](https://umamusu.wiki/Agn
 Note: All of the dependencies run under bun and bunx instead of node
 
 - [TailwindCSS](https://tailwindcss.com/)
+
+### Security
+
+- [Brakeman](https://brakemanscanner.org/) Ruby on Rails Static Analysis security tool, right now these checks are manual but a scheduled pipeline will be configured once the app reaches
+a shippable state
 
 ## Configuration
 
@@ -55,6 +61,7 @@ improve the testing experience are:
 - database_cleaner-active_record
 - capybara
 - selenium_webdriver
+- [test_prof](https://test-prof.evilmartians.io/)(This profiles and adds the `let_it_be` helper)
 
 ## Services (job queues, cache servers, search engines, etc.)
 
