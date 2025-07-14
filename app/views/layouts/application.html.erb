@@ -14,7 +14,7 @@
     <%= render "layouts/navbar" %>
     <main class="main grid grid-cols-5 grid-rows-5 gap-2 <%= yield(:main_classes)%>">
       <%= render "layouts/flash" %>
-      <div class="col-span-5 row-span-4 row-start-2">
+      <div class="col-span-5 row-span-full row-start-2">
         <%= yield %>
       </div>
     </main>
