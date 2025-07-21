@@ -29,4 +29,8 @@ class AvatarUploader < CarrierWave::Uploader::Base
   def content_type_allowlist
     [%r{image/}]
   end
+
+  def size_range
+    (1.byte)..(2.megabytes)
+  end
 end
