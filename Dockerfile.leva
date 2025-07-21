@@ -1,0 +1,36 @@
+FROM ruby:3.3-bookworm
+
+ENV LC_ALL="C.UTF-8"
+
+ENV BUNDLER_VERSION=2.7.0
+
+ADD /scripts/ /scripts/
+
+# Install Git and packages needed to build gems
+
+RUN apt-get update \
+    && apt-get install -y git libpq-dev libyaml-dev pkg-config unzip curl postgresql-client\
+    && gem install bundler --version ${BUNDLER_VERSION} --no-document \
+    && gem install rubocop --no-document \
+    && apt-get autoremove -yq \
+    && apt-get clean -yqq \
+    && git version
+
+# Get PostgreSQL Apt Repository
+
+RUN apt install -y postgresql-common
+RUN /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+
+# Install PostgreSQL
+
+RUN apt-get clean \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends build-essential postgresql postgresql-17 postgresql-server-dev-17 \
+    && apt-get autoremove -yq \
+    && apt-get clean -yqq
+
+# Install Bun
+
+RUN apt-get clean \
+    && apt-get update \
+    && /scripts/install-bun.sh

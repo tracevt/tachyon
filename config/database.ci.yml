@@ -1,0 +1,8 @@
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: tachyon_test
+  username: <%= ENV.fetch("PG_USER") %>
+  password: <%= ENV.fetch("PG_PASSWORD") %>
+  host: localhost
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
