@@ -48,20 +48,6 @@ jobs:
       run: |
         cp config/database.ci.yml config/database.yml
 
-#    - name: Modify database.yml for CI
-#      run: |
-#        echo "test:" > config/database.yml
-#        echo "  adapter: postgresql" >> config/database.yml
-#        echo "  encoding: unicode" >> config/database.yml
-#        echo "  pool: 5" >> config/database.yml
-#        echo "  database: tachyon_test" >> config/database.yml
-#        echo "  username: runner" >> config/database.yml
-#        echo "  password: ${{ env.PG_PASSWORD }}" >> config/database.yml
-#        echo "  host: localhost" >> config/database.yml
-#        echo "  port: 5432" >> config/database.yml
-#
-#        cat config/database.yml # Print for debugging purposes
-
     - name: Database setup
       shell: bash
       run: |
