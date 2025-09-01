@@ -9,17 +9,16 @@ on:
 jobs:
   rubocop_check:
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/tracevt/leva:latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.3.0
-        bundler-cache: true
+    - name: Install required gems
+      run: bundle install --without development test
 
     - name: Run Rubocop
       run: |
-        bundle exec rubocop
+        rubocop

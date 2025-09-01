@@ -1,0 +1,66 @@
+FROM debian:trixie
+
+ENV LC_ALL="C.UTF-8"
+
+ENV BUNDLER_VERSION=2.7.0
+
+ENV RUBY_VERSION=3.3.9
+
+ADD /scripts/ /scripts/
+
+# Install Git, Ruby and packages needed to build gems
+
+RUN apt-get update \
+    && apt-get install -y build-essential autoconf libssl-dev libyaml-dev zlib1g-dev libffi-dev libgmp-dev rustc curl
+
+WORKDIR /tmp
+
+RUN curl -LO https://github.com/rbenv/ruby-build/archive/refs/tags/v20250829.tar.gz \
+    && tar -xzf v20250829.tar.gz
+
+WORKDIR /tmp/ruby-build-20250829
+
+ENV PREFIX=/usr/local
+
+RUN ./install.sh 
+
+WORKDIR /
+
+RUN ruby-build ${RUBY_VERSION} /usr/local/ruby-${RUBY_VERSION}
+
+ENV PATH="/usr/local/ruby-${RUBY_VERSION}/bin:$PATH"
+
+RUN apt-get update \
+    && apt-get install -y git libpq-dev libyaml-dev pkg-config unzip   postgresql-client\
+    && gem install bundler --version ${BUNDLER_VERSION} --no-document \
+    && gem install rubocop --no-document \
+    && apt-get autoremove -yq \
+    && apt-get clean -yqq \
+    && git version
+
+# Get PostgreSQL Apt Repository
+
+RUN apt install -y postgresql-common
+RUN /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+
+# Install PostgreSQL
+
+RUN apt-get clean \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends build-essential postgresql postgresql-17 postgresql-server-dev-17 \
+    && apt-get autoremove -yq \
+    && apt-get clean -yqq
+
+# Install Bun
+
+RUN apt-get clean \
+    && apt-get update \
+    && /scripts/install-bun.sh
+
+# Install Chromium
+
+RUN apt-get update \
+    && apt-get install -y chromium chromium-sandbox chromium-driver \
+    && apt-get autoremove -yq \
+    && apt-get clean -yqq
+

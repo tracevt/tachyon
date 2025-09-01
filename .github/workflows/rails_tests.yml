@@ -9,87 +9,54 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:15-alpine
-        ports:
-          - "5432:5432"
-        env:
-          POSTGRES_DB: tachyon_test
-          POSTGRES_USER: runner
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_TEST_PASSWORD }}
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-
-    env:
-      RAILS_ENV: test
-      CI: true
-      PG_PASSWORD: ${{ secrets.POSTGRES_TEST_PASSWORD }}
+    container:
+      image: ghcr.io/tracevt/leva:latest
+      env:
+        RAILS_ENV: test
+        CI: true
+        PG_PASSWORD: ${{ secrets.POSTGRES_TEST_PASSWORD }}
+        PG_USER: ${{ secrets.POSTGRES_TEST_USER }}
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 3.3.0
-        bundler-cache: true
+    - name: Install required gems
+      shell: bash
+      run: bundle install
 
     - name: Set up Bun
       uses: oven-sh/setup-bun@v2
       with:
         bun-version: 1.2.16
 
-    - name: Install Frontend Dependencies
-      run: bun install --frozen-lockfile
-
     - name: Precompile assets
+      shell: bash
       run: |
+        bun install --frozen-lockfile
         bundle exec rails assets:precompile
 
-    - name: Configure PostgreSQL client libraries
+    - name: Start postgresql
+      shell: bash
       run: |
-        sudo apt-get update
-        sudo apt-get install -y libpq-dev
+        su postgres -c "/usr/bin/pg_ctlcluster 17 main start"
+        su postgres -c "/usr/bin/pg_ctlcluster 17 main status"
+        
+        su - postgres -c "psql -c \"CREATE USER $PG_USER WITH CREATEDB PASSWORD '$PG_PASSWORD';\""
 
-    - name: Wait for PostgreSQL service
+    - name: Update database.yml for CI
       run: |
-        echo "Waiting for PostgreSQL..."
-        for i in $(seq 1 10); do
-          if PGPASSWORD="${{ env.PG_PASSWORD }}" psql -h localhost -U runner -d tachyon_test -c "select 1" > /dev/null 2>&1; then
-            echo "PostgreSQL is ready!"
-            exit 0
-          fi
-          echo "Still waiting for PostgreSQL..."
-          sleep 1
-        done
-        echo "PostgreSQL did not become ready within the timeout."
-        exit 1
-
-    - name: Modify database.yml for CI
-      run: |
-        echo "test:" > config/database.yml
-        echo "  adapter: postgresql" >> config/database.yml
-        echo "  encoding: unicode" >> config/database.yml
-        echo "  pool: 5" >> config/database.yml
-        echo "  database: tachyon_test" >> config/database.yml
-        echo "  username: runner" >> config/database.yml
-        echo "  password: ${{ env.PG_PASSWORD }}" >> config/database.yml
-        echo "  host: localhost" >> config/database.yml
-        echo "  port: 5432" >> config/database.yml
-
-        cat config/database.yml # Print for debugging purposes
+        cp config/database.ci.yml config/database.yml
 
     - name: Database setup
+      shell: bash
       run: |
+        bin/rails db:drop
         bin/rails db:create
         bin/rails db:schema:load
+        bin/rails db:migrate
 
     - name: Run RSpec tests
+      shell: bash
       run: |
         bundle exec rspec
