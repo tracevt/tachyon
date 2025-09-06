@@ -1,15 +1,22 @@
 <% if resource.errors.any? %>
-  <div id="error_explanation" data-turbo-cache="false">
-    <h2>
-      <%= I18n.t("errors.messages.not_saved",
-                 count: resource.errors.count,
-                 resource: resource.class.model_name.human.downcase)
-       %>
-    </h2>
-    <ul>
-      <% resource.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
+  <% content_for(:devise_flash_messages) do %>
+    <div role="alert" class="alert alert-horizontal sm:col-span-5 sm:row-span-1 row-start-1 h-min alert-info js-alert">
+      <div>
+        <h2>
+          <%= I18n.t("errors.messages.not_saved",
+                     count: resource.errors.count,
+                     resource: resource.class.model_name.human.downcase)
+          %>
+        </h2>
+        <ul>
+          <% resource.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="justify-self-end">
+        <button type="button" class="btn btn-sm js-close-alert" aria-label="Close">Cerrar</button>
+      </div>
+    </div>
+  <% end %>
 <% end %>

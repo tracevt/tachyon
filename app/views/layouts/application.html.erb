@@ -12,9 +12,10 @@
 
   <body>
     <%= render "layouts/navbar" %>
-    <main class="main grid col-auto sm:grid-cols-5 gap-2 <%= yield(:main_classes)%>">
+    <main class="main grid col-auto sm:grid-cols-5 gap-2">
       <%= render "layouts/flash" %>
-      <div class="col-auto sm:col-span-5 sm:col-start-1 sm:row-span-4 row-start-2">
+      <%= yield(:devise_flash_messages) %>
+      <div class="col-auto sm:col-span-5 sm:col-start-1 sm:row-span-4 row-start-2 <%= yield(:main_classes)%>">
         <%= yield %>
       </div>
     </main>

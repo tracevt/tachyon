@@ -2,7 +2,7 @@
    <div class="sm:col-span-3 sm:col-start-2 sm:row-span-full bg-base-200 border-base-300 rounded-box border p-4">
       <h2 class="text-2xl mb-4">Perfil</h2>
       <%# Profile image %>
-      <div class="mb-4 flex justify-center sm:justify-end">
+      <div class="mb-4 flex justify-center sm:justify-start">
          <div class="avatar">
             <div class="w-48 rounded-full">
               <% unless @user.avatar.file.nil? %>
@@ -10,33 +10,35 @@
               <% end %>
             </div>
          </div>
-
+      </div>
+      <div class="mb-8 flex w-full">
         <%= form_for @user, url: profile_path, method: :patch, html: { multipart: true } do |f| %>
-          <p>
-            <label>My Avatar</label>
-            <%= f.file_field :avatar %>
-            <%= f.hidden_field :avatar_cache %>
-          </p>
-          <%= f.submit "Update avatar", class: "btn btn-neutral"%>
+          <fieldset class="fieldset bg-base-200 border-base-300 rounded-box">
+            <div class="join">
+              <%= f.file_field :avatar, class: 'file-input'%>
+              <%= f.hidden_field :avatar_cache %>
+              <%= f.submit "Update avatar", class: "btn btn-neutral"%>
+            </div>
+          </fieldset>
         <% end %>
       </div>
-     <div class="mb-4 flex bg-base-100 rounded-box p-4 shadow-md">
-       <%= form_for @user, url: profile_path, method: :patch do |f| %>
-         <%= f.label :name, class: "label " %><br />
-         <%= f.text_field :name, class: "input" %>
+      <div class="mb-4 flex bg-base-100 rounded-box p-4 shadow-md">
+        <%= form_for @user, url: profile_path, method: :patch do |f| %>
+          <%= f.label :name, class: "label " %><br />
+          <%= f.text_field :name, class: "input" %>
 
-         <%= f.label :bio, class:"label" %><br />
-         <%= f.textarea :bio, class: "textarea" %>
+          <%= f.label :bio, class:"label" %><br />
+          <%= f.textarea :bio, class: "textarea" %>
 
-         <%= f.label :pronouns, class: "label" %><br />
-         <%= f.text_field :pronouns, class: "input" %>
+          <%= f.label :pronouns, class: "label" %><br />
+          <%= f.text_field :pronouns, class: "input" %>
 
-         <%= f.submit "Actualizar perfil", class:"btn btn-neutral mt-4" %>
-       <% end %>
-     </div>
+          <%= f.submit "Actualizar perfil", class:"btn btn-neutral mt-4" %>
+        <% end %>
+      </div>
       <ul class="mb-4 list bg-base-100 rounded-box shadow-md">
          <li class="list-row">
-           <div>Cambiar contraseña</div>
+           <%= link_to "Cambiar contraseña", edit_user_registration_path, class: "link" %>
          </li>
       </ul>
    </div>
