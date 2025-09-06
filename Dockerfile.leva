@@ -51,6 +51,14 @@ RUN apt-get clean \
     && apt-get autoremove -yq \
     && apt-get clean -yqq
 
+# Install Image transformation libraries
+
+RUN apt-get clean \
+    && apt-get update \
+    && apt-get install -y libvips libvips-tools libpng-dev libjpeg-dev imagemagick \
+    && apt-get autoremove -yq \
+    && apt-get clean -yqq
+
 # Install Bun
 
 RUN apt-get clean \
@@ -63,4 +71,3 @@ RUN apt-get update \
     && apt-get install -y chromium chromium-sandbox chromium-driver \
     && apt-get autoremove -yq \
     && apt-get clean -yqq
-
