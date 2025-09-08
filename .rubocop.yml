@@ -17,3 +17,5 @@ Layout/LineLength:
   Max: 160
 AllCops:
   NewCops: enable
+RSpecRails/InferredSpecType:
+  Enabled: false

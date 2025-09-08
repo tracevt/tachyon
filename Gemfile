@@ -43,9 +43,6 @@ gem 'tzinfo-data', platforms: %i[windows jruby]
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', require: false
 
-# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
-# gem "image_processing", "~> 1.2"
-
 # Rubocop for static linting
 
 gem 'rubocop', '~> 1.76', require: false
@@ -58,6 +55,11 @@ gem 'rubocop-rspec_rails', '~> 2.31', require: false
 # Brakeman for security scanning
 
 gem 'brakeman'
+
+# File uploads
+gem 'carrierwave', '~> 3.0'
+gem 'image_processing', '~> 1.2'
+gem 'mini_magick', '~> 5.3'
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -92,11 +94,9 @@ group :development do
 
   # Add speed badges [https://github.com/MiniProfiler/rack-mini-profiler]
   # gem "rack-mini-profiler"
-
-  # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
-  # gem "spring"
 end
 
 group :test do
+  gem 'rails-controller-testing'
   gem 'test-prof', '~> 1.0'
 end
